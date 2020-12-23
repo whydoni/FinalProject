@@ -10,56 +10,34 @@ import java.util.concurrent.TimeoutException;
 
 public class SendMqRestAPI {
 
-    // Show All Data Nasabah
-    public static void getAll() throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        String nasabahString = "Requesting All Data";
-        try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
-            channel.queueDeclare("getAlldataNasabah", false, false, false, null);
-            channel.basicPublish("", "getAlldataNasabah", null, nasabahString.getBytes(StandardCharsets.UTF_8));
-            System.out.println(" [x] Sent '" + nasabahString + "'");
-        }
-    }
 
-    // Create Data Nasabah
-    public static void addNasabah(String nasabahString) throws IOException, TimeoutException {
+    // Register Data Nasabah
+    public static void registerNasabah(String nasabah) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare("createDataNasabah", false, false, false, null);
-            channel.basicPublish("", "createDataNasabah", null, nasabahString.getBytes(StandardCharsets.UTF_8));
-            System.out.println(" [x] Sent '" + nasabahString + "'");
+            channel.basicPublish("", "createDataNasabah", null, nasabah.getBytes(StandardCharsets.UTF_8));
+            System.out.println(" [x] Sent '" + nasabah + "'");
         }
     }
 
-    // Delete Data Nasabah by ID
-    public static void deleteNasabahById(String idString) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
-            channel.queueDeclare("deleteDataNasabah", false, false, false, null);
-            channel.basicPublish("", "deleteDataNasabah", null, idString.getBytes(StandardCharsets.UTF_8));
-            System.out.println(" [x] Sent '" + idString + "'");
-        }
-    }
 
-    // Find Data Nasabah by ID
-    public static void findDataById(String nasabahString) throws IOException, TimeoutException {
+    //Find Data Nasabah by Username
+    public static void findNasabah(String username) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare("findDataNasabah", false, false, false, null);
-            channel.basicPublish("", "findDataNasabah", null, nasabahString.getBytes(StandardCharsets.UTF_8));
-            System.out.println(" [x] Sent '" + nasabahString + "'");
+            channel.basicPublish("", "findDataNasabah", null, username.getBytes(StandardCharsets.UTF_8));
+            System.out.println(" [x] Sent '" + username + "'");
         }
     }
 
-    public static void getSaldoNsb(String username) throws IOException, TimeoutException {
+    //Get Saldo Nasabah by Username
+    public static void getSaldoNasabah(String username) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         try (Connection connection = factory.newConnection();
@@ -70,19 +48,19 @@ public class SendMqRestAPI {
         }
     }
 
-    //Update Data Nasabah
-    public static void updateNasabah(String nasabahString) throws IOException, TimeoutException {
+    public static void getMutasi(String accountnumber) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
-            channel.queueDeclare("updateDataNasabah", false, false, false, null);
-            channel.basicPublish("", "updateDataNasabah", null, nasabahString.getBytes(StandardCharsets.UTF_8));
-            System.out.println(" [x] Sent '" + nasabahString + "'");
+            channel.queueDeclare("getMutasi", false, false, false, null);
+            channel.basicPublish("", "getMutasi", null, accountnumber.getBytes(StandardCharsets.UTF_8));
+            System.out.println(" [x] Sent '" + accountnumber + "'");
         }
     }
 
-    //Change Status Login Nasabah
+
+    //Login Nasabah
     public static void loginNasabah(String nasabahString) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
@@ -94,18 +72,8 @@ public class SendMqRestAPI {
         }
     }
 
+
     //Logout Nasabah
-    //Change Status Login Nasabah to Logout
-//    public static void logoutNasabah(String nasabahString) throws IOException, TimeoutException {
-//        ConnectionFactory factory = new ConnectionFactory();
-//        factory.setHost("localhost");
-//        try (Connection connection = factory.newConnection();
-//             Channel channel = connection.createChannel()) {
-//            channel.queueDeclare("doLogoutNasabah", false, false, false, null);
-//            channel.basicPublish("", "doLogoutNasabah", null, nasabahString.getBytes(StandardCharsets.UTF_8));
-//            System.out.println(" [x] Sent '" + nasabahString + "'");
-//        }
-//    }
     public static void logoutNasabah() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");

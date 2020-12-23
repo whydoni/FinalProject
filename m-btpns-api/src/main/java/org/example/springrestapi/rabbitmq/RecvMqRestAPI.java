@@ -173,6 +173,44 @@ public class RecvMqRestAPI {
         return saldoResponse;
     }
 
+    public String RecvMutasiUser() throws IOException, TimeoutException {
+        String mutasiResponse = "";
+        try {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.setHost("localhost");
+            Connection connection = factory.newConnection();
+            Channel channel = connection.createChannel();
+
+            channel.queueDeclare("sendMutasiData", false, false, false, null);
+            System.out.println(" [*] Waiting for messages from database");
+
+            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+                String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
+                System.out.println(" [x] Received '" + message + "'");
+                this.message = message;
+            };
+            channel.basicConsume("sendMutasiData", true, deliverCallback, consumerTag -> { });
+            TimeUnit.SECONDS.sleep(2);
+            if (!this.message.equals("0")) {
+                JSONObject object = new JSONObject();
+                object.put("response", 200);
+                object.put("status", "Success");
+                object.put("message", message);
+                mutasiResponse = object.toJSONString();
+            } else {
+                JSONObject object = new JSONObject();
+                object.put("response", 400);
+                object.put("status", "Error");
+                object.put("message", "Error get Mutasi");
+                mutasiResponse = object.toJSONString();
+            }
+        } catch (Exception e) {
+            System.out.println("Exception get Mutasi: " + e);
+            e.printStackTrace();
+        }
+        return mutasiResponse;
+    }
+
     public String getLoginmessage() {
         return Loginmessage;
     }

@@ -1,5 +1,6 @@
 package org.example.database.daos;
 
+import org.example.database.entities.Mutasi;
 import org.example.database.entities.Nasabah;
 
 import com.google.gson.Gson;
@@ -18,32 +19,14 @@ public class NasabahDao {
         this.entityTransaction = entityManager.getTransaction();
     }
 
-    public Nasabah find(String id) {
-        return entityManager.find(Nasabah.class, Long.valueOf(id));
-    }
 
     public List<Nasabah> getAllNsb(){
         return entityManager.createQuery("SELECT a FROM Nasabah a", Nasabah.class).getResultList();
     }
 
 
-    public Nasabah findByRekening(String nasabahString) {
-        Nasabah nsb = new Gson().fromJson(nasabahString, Nasabah.class);
-        Nasabah nasabah;
-        try {
-            nasabah = entityManager.createQuery("SELECT a FROM Nasabah a where accountnumber =" + nsb.getAccountnumber(), Nasabah.class).getSingleResult();
-        } catch (NoResultException e){
-            return null;
-        }
-        System.out.println("Debugginngs  : " + nasabah);
-        return nasabah;
-    }
-
-
     public Nasabah findUser(String username) {
-//        Nasabah  nasabah;
         try {
-//            nasabah = entityManager.createQuery("SELECT a FROM Nasabah a where username ="+username, Nasabah.class).getSingleResult();
             String select = "SELECT a FROM Nasabah a WHERE username=:username";
             Query query = entityManager.createQuery(select, Nasabah.class);
             query.setParameter("username", username);
@@ -54,14 +37,26 @@ public class NasabahDao {
         }
     }
 
+
     public Integer getSaldo(String username) {
         try {
-//            nasabah = entityManager.createQuery("SELECT a FROM Nasabah a where username ="+username, Nasabah.class).getSingleResult();
             String select = "SELECT balance FROM Nasabah WHERE username=:username";
             Query query = entityManager.createQuery(select);
             query.setParameter("username", username);
             System.out.println("debug : "+ (Integer)query.getSingleResult());
             return (Integer) query.getSingleResult();
+        } catch (NoResultException e){
+            return null;
+        }
+    }
+
+    public List<Mutasi> getMutasi(String accountnumber) {
+        try { //from Nasabah nya nanti diganti dulu ke model mutasi
+            String select = "SELECT a FROM Mutasi a WHERE accountnumber=:accountnumber";
+            Query query = entityManager.createQuery(select, Mutasi.class);
+            query.setParameter("accountnumber", accountnumber);
+            System.out.println("debug : "+ (List<Mutasi>)query.getResultList());
+            return (List<Mutasi>) query.getResultList();
         } catch (NoResultException e){
             return null;
         }
@@ -73,56 +68,24 @@ public class NasabahDao {
         entityManager.persist(nasabah);
     }
 
-    public void update(String nsbString){
-        Nasabah currentNasabah = new Gson().fromJson(nsbString, Nasabah.class);
-        Nasabah nextNasabah = entityManager.find(Nasabah.class, currentNasabah.getId());
-        nextNasabah.setFullname(currentNasabah.getFullname());
-        nextNasabah.setPhonenumber(currentNasabah.getPhonenumber());
-        nextNasabah.setAddress(currentNasabah.getAddress());
-        nextNasabah.setPassword(currentNasabah.getPassword());
-        nextNasabah.setStatus(currentNasabah.getStatus());
-        entityManager.merge(nextNasabah);
-    }
-
-    public void remove(String id) {
-        Nasabah nasabah = entityManager.find(Nasabah.class, Long.valueOf(id));
-        entityManager.remove(nasabah);
-    }
-//
-//    public void doLogin(String nsbString) {
-//        Nasabah currentState = new Gson().fromJson(nsbString, Nasabah.class);
-//        Nasabah nextState = entityManager.findAll
+//    public void update(String nsbString){
+//        Nasabah currentNasabah = new Gson().fromJson(nsbString, Nasabah.class);
+//        Nasabah nextNasabah = entityManager.find(Nasabah.class, currentNasabah.getId());
+//        nextNasabah.setFullname(currentNasabah.getFullname());
+//        nextNasabah.setPhonenumber(currentNasabah.getPhonenumber());
+//        nextNasabah.setAddress(currentNasabah.getAddress());
+//        nextNasabah.setPassword(currentNasabah.getPassword());
+//        nextNasabah.setStatus(currentNasabah.getStatus());
+//        entityManager.merge(nextNasabah);
 //    }
 
 
-//  Yang Betul
     public void doLogin(String id) {
-//    public void doLogin(String myNsb, String id) {
         Nasabah nasabah = entityManager.find(Nasabah.class, Long.valueOf(id));
-//        Nasabah cekNasabah = new Gson().fromJson(myNsb, Nasabah.class);
-//        if(cekNasabah.getUsername().equals(nasabah.getUsername()) && cekNasabah.getPassword().equals(nasabah.getPassword())) {
             Boolean statusLogin = true;
             nasabah.setIsLogin(statusLogin);
-//        }
     }
 
-//    public void doLogin(String myNsb, String id) {
-//        Nasabah nasabah = entityManager.find(Nasabah.class, Long.valueOf(id));
-//        Nasabah cekNasabah = new Gson().fromJson(myNsb, Nasabah.class);
-//        if(cekNasabah.getUsername().equals(nasabah.getUsername()) && cekNasabah.getPassword().equals(nasabah.getPassword())) {
-//            Boolean statusLogin = true;
-//            nasabah.setIsLogin(statusLogin);
-//        }
-//    }
-
-//    public void doLogin(Nasabah nasabah) {
-//        String select = "SELECT id FROM datanasabah WHERE username=:username and password=:password";
-//        Query query = entityManager.createQuery(select);
-//        query.setParameter("username", nasabah.getUsername());
-//        query.setParameter("password", nasabah.getPassword());
-//        Boolean statusLogin = true;
-//        nasabah.setIsLogin(statusLogin);
-//    }
 
     public void doLogout(String id) {
         Nasabah nasabah = entityManager.find(Nasabah.class, Long.valueOf(id));

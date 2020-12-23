@@ -1,5 +1,6 @@
 package org.example.database.rabbitmq;
 
+import org.example.database.entities.Mutasi;
 import org.example.database.entities.Nasabah;
 //import org.example.database.rabbitmq.DatabaseSendMq;
 
@@ -60,69 +61,28 @@ public class DatabaseRecvMq {
         }
     }
 
-    public void addNasabah(){
+
+    public void regisNasabah(){
         try{
             connectToRabbitMQ();
             channel = connection.createChannel();
             channel.queueDeclare("createDataNasabah", false, false, false, null);
             DeliverCallback deliverCallback = (consumerTag, delivery ) -> {
-                String nasabahString = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                System.out.println(" [x] Received '" + nasabahString + "'");
+                String nasabah = new String(delivery.getBody(), StandardCharsets.UTF_8);
+                System.out.println(" [x] Received '" + nasabah + "'");
                 connectJPA();
-                nasabahDao.persist(nasabahString);
+                nasabahDao.persist(nasabah);
                 commitJPA();
             };
             channel.basicConsume("createDataNasabah", true, deliverCallback, consumerTag -> {
             });
         } catch (Exception e) {
-            System.out.println("ERROR! on addNasabah -dbrmq : " + e);
+            System.out.println("Error on Register Nasabah : " + e);
         }
     }
 
-    public void getAllNasabah() {
-        try {
-            connectToRabbitMQ();
-            channel = connection.createChannel();
-            channel.queueDeclare("getAlldataNasabah", false, false, false, null);
-            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                String nasabahString = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                System.out.println(" [x] Received '" + nasabahString + "'");
-                connectJPA();
-                try {
-                    List<Nasabah> listNasabah= nasabahDao.getAllNsb();
-                    send.sendToRestApi(new Gson().toJson(listNasabah));
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
-                }
-                commitJPA();
-            };
-            channel.basicConsume("getAlldataNasabah", true, deliverCallback, consumerTag -> {
-            });
-        } catch (Exception e) {
-            System.out.println("Error getAlldataNasabah = " + e);
-        }
-    }
 
-    public void updateNasabah(){
-        try{
-            connectToRabbitMQ();
-            channel = connection.createChannel();
-            channel.queueDeclare("updateDataNasabah", false, false, false, null);
-            DeliverCallback deliverCallback = (consumerTag, delivery ) -> {
-                String nasabahString = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                System.out.println(" [x] Received '" + nasabahString + "'");
-                connectJPA();
-                nasabahDao.update(nasabahString);
-                commitJPA();
-            };
-            channel.basicConsume("updateDataNasabah", true, deliverCallback, consumerTag -> {
-            });
-        } catch (Exception e) {
-            System.out.println("ERROR! on updateNasabah -dbrmq : " + e);
-        }
-    }
-
-    public void findDataById(){
+    public void findByUsername(){
         try{
             connectToRabbitMQ();
             channel = connection.createChannel();
@@ -212,24 +172,33 @@ public class DatabaseRecvMq {
         }
     }
 
-    public void deleteNasabahById(){
+
+    public void getMutasi(){
         try{
             connectToRabbitMQ();
             channel = connection.createChannel();
-            channel.queueDeclare("deleteDataNasabah", false, false, false, null);
+            channel.queueDeclare("getMutasi", false, false, false, null);
             DeliverCallback deliverCallback = (consumerTag, delivery ) -> {
-                String idNsbString = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                System.out.println(" [x] Received '" + idNsbString + "'");
+                String accountnumber = new String(delivery.getBody(), StandardCharsets.UTF_8);
+                System.out.println(" [x] Received '" + accountnumber + "'");
                 connectJPA();
-                nasabahDao.remove(idNsbString);
+                try {
+                    List<Mutasi> mutasi = nasabahDao.getMutasi(accountnumber);
+                    String mutasiString = new Gson().toJson(mutasi);
+                    send.sendMutasiData(mutasiString);
+//                    send.sendToRestApi(new Gson().toJson(mutasi));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 commitJPA();
             };
-            channel.basicConsume("deleteDataNasabah", true, deliverCallback, consumerTag -> {
+            channel.basicConsume("getMutasi", true, deliverCallback, consumerTag -> {
             });
         } catch (Exception e) {
-            System.out.println("ERROR! on deleteNasabahById -dbrmq : " + e);
+            System.out.println("ERROR! on getSaldo -dbrmq : " + e);
         }
     }
+
 
     public void loginNasabah() {
         try {
@@ -264,8 +233,6 @@ public class DatabaseRecvMq {
             System.out.println("ERROR! on loginNasabah -dbrmq : " + e);
         }
     }
-
-
 
 
     public void logoutNasabah(){

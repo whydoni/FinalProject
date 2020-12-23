@@ -9,6 +9,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 public class DatabaseSendMq {
+
+
     public void sendToRestApi(String message) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
@@ -18,11 +20,9 @@ public class DatabaseSendMq {
             channel.basicPublish("", "messageFromDatabase", null, message.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + message + "'");
         } catch (Exception e){
-            System.out.println("Failed to send message to RestApi.." + e);
+            System.out.println("Gagal mengirim pesan ke RestApi.." + e);
         }
     }
-
-
 
 
     public void sendLogin(String message) {
@@ -34,9 +34,10 @@ public class DatabaseSendMq {
             channel.basicPublish("", "sendLogin", null, message.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + message + "'");
         } catch (Exception e){
-            System.out.println("Gagal mengirim pesan ke RestApi.." + e);
+            System.out.println("Error send login nasabah : " + e);
         }
     }
+
 
     public void sendLogout(String message) {
         ConnectionFactory factory = new ConnectionFactory();
@@ -47,9 +48,10 @@ public class DatabaseSendMq {
             channel.basicPublish("", "sendLogout", null, message.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + message + "'");
         } catch (Exception e){
-            System.out.println("Gagal mengirim pesan ke RestApi.." + e);
+            System.out.println("Error send logout nasabah : " + e);
         }
     }
+
 
     public void sendNasabahData(String message) {
         ConnectionFactory factory = new ConnectionFactory();
@@ -60,7 +62,7 @@ public class DatabaseSendMq {
             channel.basicPublish("", "sendNasabahData", null, message.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + message + "'");
         } catch (Exception e){
-            System.out.println("Gagal mengirim pesan ke RestApi.." + e);
+            System.out.println("Error send data nasabah : " + e);
         }
     }
 
@@ -73,7 +75,20 @@ public class DatabaseSendMq {
             channel.basicPublish("", "sendSaldoData", null, message.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + message + "'");
         } catch (Exception e){
-            System.out.println("Gagal mengirim pesan ke RestApi.." + e);
+            System.out.println("Error send saldo nasabah : " + e);
+        }
+    }
+
+    public void sendMutasiData(String message) {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+        try (Connection connection = factory.newConnection();
+             Channel channel = connection.createChannel()) {
+            channel.queueDeclare("sendMutasiData", false, false, false, null);
+            channel.basicPublish("", "sendMutasiData", null, message.getBytes(StandardCharsets.UTF_8));
+            System.out.println(" [x] Sent '" + message + "'");
+        } catch (Exception e){
+            System.out.println("Error send mutasi nasabah : " + e);
         }
     }
 

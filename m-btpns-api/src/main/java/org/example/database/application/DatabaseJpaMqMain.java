@@ -16,15 +16,13 @@ public class DatabaseJpaMqMain {
     public static void main(String[] args) {
         try{
             System.out.println(" [*] Waiting for messages...");
-            //CRUD Nasabah
-            receiveMq.addNasabah();
-            receiveMq.updateNasabah();
-            receiveMq.deleteNasabahById();
-            receiveMq.getAllNasabah();
-            receiveMq.findDataById();
+            //DB Consumer for CRUD
+            receiveMq.regisNasabah();
+            receiveMq.findByUsername();
             receiveMq.getSaldoNsb();
+            receiveMq.getMutasi();
 
-            //Session change value of isLogin
+            //DB Consumer for Session isLogin
             receiveMq.loginNasabah();
             receiveMq.logoutNasabah();
         }catch (Exception e){

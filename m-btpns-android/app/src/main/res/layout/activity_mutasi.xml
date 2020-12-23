@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MutasiActivity">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mDatebtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:text="Mutasi"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:id="@+id/selectedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mDatebtn"
+        android:layout_marginTop="140dp"
+        android:layout_centerInParent="true"
+        android:textSize="28sp"
+        android:text="TextView" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomnav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:itemIconSize="30dp"
+        app:itemRippleColor="#F9C70C"
+        app:itemTextColor="#F77400"
+        app:itemIconTint="#F77400"
+        app:labelVisibilityMode="selected"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/menu_bottom" />
+
+</RelativeLayout>

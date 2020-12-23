@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">myBTPNS</string>
+    <string name="belum_punya_akun_daftar">Belum punya akun? Daftar</string>
+    <string name="login">Login</string>
+    <string name="lupa_password">Lupa password ?</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="nama">Nama</string>
+    <string name="no_rekening">No Rekening</string>
+    <string name="alamat">Alamat</string>
+    <string name="no_hp">No Hp</string>
+    <string name="register">Register</string>
+    <string name="btpns">btpns</string>
+    <string name="tepat">tepat</string>
+    <string name="footer">footer</string>
+    <string name="masuk">Sudah punya akun? Masuk</string>
+    <string name="starstring">****</string>
+    <string name="_2020">2020</string>
+    <string name="berbagi">Berbagi itu indah</string>
+    <string name="azzahra">Azzahra</string>
+    <string name="faridah">Faridah</string>
+    <string name="jaenab">Jaenab</string>
+    <string name="siti_khadijah">Siti Khadijah</string>
+    <string name="aisyah">Aisyah</string>
+    <string name="todo">TODO</string>
+    <string name="jumlah_tagihan">Jumlah Tagihan</string>
+    <string name="pilih_operator">Pilih Operator</string>
+    <string name="pascabayar">Pascabayar</string>
+    <string name="xl_axiata">XL axiata</string>
+    <string name="indosat">Indosat</string>
+    <string name="telkomsel">Telkomsel</string>
+</resources>

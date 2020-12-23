@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_light"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/login_li_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_li_left"
+            android:layout_width="120dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="120dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/tepat_white"
+            android:contentDescription="@string/tepat" />
+
+        <ImageView
+            android:id="@+id/img_li_right"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/btpns_white"
+            android:contentDescription="@string/btpns" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_below="@+id/login_li_top"
+        android:id="@+id/sharia_illustartion"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/banner2" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sharia_illustartion"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#ffffff"
+            android:hint="@string/username"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_username"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/outlinedTextField1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffffff"
+            android:hint="@string/password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/bt_forgotpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/outlinedTextField2"
+            android:layout_alignEnd="@id/outlinedTextField2"
+            android:layout_marginBottom="14dp"
+            android:textColor="#002D6C"
+            android:textStyle="bold"
+            android:text="@string/lupa_password" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bt_forgotpassword"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#002D6C"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:cornerRadius="@dimen/loginCardRadius"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bt_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bt_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="20dp"
+            android:text="@string/belum_punya_akun_daftar"
+            android:textColor="#F7931E"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/footerlogo"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/bt_login"
+        android:layout_alignStart="@+id/bt_login"
+        android:layout_alignEnd="@+id/bt_login"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/icon_logos_footer"
+        android:contentDescription="@string/footer" />
+
+</RelativeLayout>
